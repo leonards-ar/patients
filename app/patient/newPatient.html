@@ -1,0 +1,95 @@
+<div class="col-md-12" ng-controller="NewpatientCtrl">
+  <div class="container" id="container">
+        <h2><span id="action">Alta</span> del Paciente</h2>
+        <div class="pull-right">
+          <span style="right:100%"><img class="circle" src="../img/patient-logo-48x48.png"/></span>
+        </div>
+        <p id="SCActionLink"></p>
+
+        <form id="newPatient" class="form-horizontal" style="margin-top: 25px;">
+            <div class="form-group">
+                <label for="patient" class="col-sm-3 col-xs-3 control-label">Paciente</label>
+                <div class="col-sm-6 col-xs-8 ">
+                  <input class="form-control" ng-model="patient.name" type="text" uib-typeahead="patient for patient in autcompletePatient($viewValue) | limitTo:8" typeahead-loading="loadingLocations" typeahead-no-results="noResults">
+                  <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date" class="col-sm-3 col-xs-3 control-label">Fecha</label>
+                <div class="col-sm-6 col-xs-8">
+                  <p class="input-group">
+                    <input class="form-control" type="text" uib-datepicker-popup="{{format}}"ng-model="patient.date" is-open="isOpen" ng-init="isOpen = false">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="isOpen = !isOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceOwner" class="col-sm-3 col-xs-3 control-label">Factura a Cargo</label>
+                <div class="col-sm-6 col-xs-8">
+                  <select id="invoiceOwner" name="invoiceOwner" ng-model="patient.invoiceOwner" class="form-control">
+                    <option ng-repeat="option in ownerList" value="{{option}}">{{option}}</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="patology" class="col-sm-3 col-xs-3 control-label">Patolog&iacute;a</label>
+                <div class="col-sm-6 col-xs-8">
+                    <input ng-model="patient.pathology" uib-typeahead="pathology for pathology in autocompletePathology($viewValue) | limitTo:8" typeahead-loading="loadingPathLocations" class="form-control"></select>
+                    <i ng-show="loadingPathLocations" class="glyphicon glyphicon-refresh"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hospital" class="col-sm-3 col-xs-3 control-label">Sanatorio</label>
+                <div class="col-sm-6 col-xs-8">
+                    <input id="hospital" ng-model="patient.hospital" uib-typeahead="hospital for hospital in autocompleteHospital($viewValue) | limitTo:8" typeahead-loading="loadingHospLocations" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="room" class="col-sm-3 col-xs-3 control-label">Habitacion</label>
+                <div class="col-sm-6 col-xs-8">
+                    <input type="text" id="room" name="room" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="plan" class="col-sm-3 col-xs-3 control-label">Plan</label>
+                <div class="col-sm-6 col-xs-8">
+                  <select id="plan" name="plan" ng-model="patient.plan" class="form-control">
+                    <option ng-repeat="option in planList" value="{{option}}">{{option}}</option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="credential_number" class="col-sm-3 col-xs-3 control-label">N&uacute;mero</label>
+                <div class="col-sm-6 col-xs-8">
+                  <input id="credential_number" class="form-control" type="text" name="credential_number">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="treatment" class="col-sm-3 col-xs-3 control-label">Tratamiento</label>
+                <div class="col-sm-6 col-xs-8">
+                  <input id="treatment" class="form-control" type="textarea" rows="4" cols="50" name="treatment">
+                </div>
+            </div>
+
+            <input id="eid" type="hidden" value="" name="eid" class="ignore">
+            <input id="Id" type="hidden" value="" name="Id" class="ignore">
+            <input id="OppId" class="form-control" type="hidden" name="OppId">
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-xs-offset-3 col-sm-6 col-xs-8">
+                    <input type="submit" value="Create" id="createSCAction" class="btn btn-success" data-loading-text="Loading...">
+                    <input type="submit" value="Close" id="closePopup" class="btn btn-danger pull-right">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

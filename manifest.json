@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Patient Data",
+  "description": "This App is designed to update a Google Shit with patients information",
+  "version": "0.0.1",
+  "app": {
+    "background": {
+      "scripts": ["js/background.js"]
+    }
+
+  },
+  "icons": {
+    "16": "img/patient-logo-16x16.png",
+    "48": "img/patient-logo-48x48.png",
+    "128": "img/patient-logo-128x128.png"
+  },
+  "oauth2": {
+    "client_id": "217086337535-5n29jarj09ofbr06piv3icc4n6ce15ap.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly",
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/spreadsheets.readonly",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "permissions": [
+    "identity",
+    "https://ssl.gstatic.com/",
+    "https://www.googleapis.com/",
+    "https://accounts.google.com/",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://spreadsheets.google.com/*"
+  ]
+}
