@@ -111,6 +111,92 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
                 });
             });
         return deferred.promise;
+      },
+      saveSpreadSheet: function (patient){
+
+        var deferred = $q.defer();
+        url = "https://sheets.googleapis.com/v4/spreadsheets/1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY:batchUpdate";
+
+        var request = {
+          "requests":[{
+              "appendCells":
+                {
+                "sheetId": 1546513263,
+                "rows":[{
+                  "values":[{
+                      "userEnteredValue":{
+                        "stringValue": patient.name
+                      },
+                      "effectiveFormat":{
+                        "textFormat":{
+                          "fontFamily": "Arial",
+                          "fontSize": 12
+                        }
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.date
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.invoiceOwner
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.pathology
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.hospital
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.room
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.plan
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": ""
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.credential_number
+                      }
+                    },
+                    {
+                      "userEnteredValue":{
+                        "stringValue": patient.treaetment
+                      }
+                    }
+                  ]
+                }],
+                "fields":"*"
+              }
+            }]
+        };
+
+        $http.post(url,request)
+        .success(function(data, status, headers, config) {
+            deferred.resolve(data);
+        })
+        .error(function(data, status, headers, config) {
+            deferred.reject({
+                data: data,
+                status: status
+            });
+        });
+        return deferred.promise;
       }
     };
 

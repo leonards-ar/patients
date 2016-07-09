@@ -23,7 +23,7 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
   vm.autocompleteOwner = function(owner){
       return patientService.getOwners(owner).then(function(data){
         return returnList(data);
-      })
+      });
   };
 
   vm.autcompletePatient = function(patient){
@@ -43,6 +43,14 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
         return returnList(data);
     });
 
+  };
+
+  vm.save = function(){
+    patientService.saveSpreadSheet(vm.patient).then(function(data){
+      console.log("!!!!!Se guardo");
+    }, function(){
+        console.log("!!!!!Error");
+    });
   };
 
   function returnList(dataQueryTable){

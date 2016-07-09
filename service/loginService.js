@@ -37,7 +37,7 @@ angular.module('patients').factory('loginService',function($q,$rootScope,$http) 
               });
           });
 
-          return deferred.promise
+          return deferred.promise;
 
       },
 

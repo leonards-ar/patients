@@ -52,7 +52,7 @@
             <div class="form-group">
                 <label for="room" class="col-sm-3 col-xs-3 control-label">Habitacion</label>
                 <div class="col-sm-6 col-xs-8">
-                    <input type="text" id="room" name="room" class="form-control"></select>
+                    <input type="text" id="room" name="room" ng-model="patient.room" class="form-control"></select>
                 </div>
             </div>
             <div class="form-group">
@@ -67,13 +67,13 @@
             <div class="form-group">
                 <label for="credential_number" class="col-sm-3 col-xs-3 control-label">N&uacute;mero</label>
                 <div class="col-sm-6 col-xs-8">
-                  <input id="credential_number" class="form-control" type="text" name="credential_number">
+                  <input id="credential_number" class="form-control" ng-model="patient.credential_number" type="text" name="credential_number">
                 </div>
             </div>
             <div class="form-group">
                 <label for="treatment" class="col-sm-3 col-xs-3 control-label">Tratamiento</label>
                 <div class="col-sm-6 col-xs-8">
-                  <input id="treatment" class="form-control" type="textarea" rows="4" cols="50" name="treatment">
+                  <input id="treatment" class="form-control" type="textarea" ng-model="patient.treaetment" rows="4" cols="50" name="treatment">
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-xs-offset-3 col-sm-6 col-xs-8">
-                    <input type="submit" value="Create" id="createSCAction" class="btn btn-success" data-loading-text="Loading...">
+                    <input type="submit" value="Create" id="createSCAction" ng-click="save()" class="btn btn-success" data-loading-text="Loading...">
                     <input type="submit" value="Close" id="closePopup" class="btn btn-danger pull-right">
                 </div>
             </div>
