@@ -1,4 +1,4 @@
-angular.module('patients').controller('NewpatientCtrl',function($scope, patientService,$rootScope){
+angular.module('patients').controller('NewpatientCtrl',function($scope, patientService,$rootScope,$timeout){
 
   var vm=$scope;
 
@@ -7,41 +7,28 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
   };
 
   function init(){
-    setOwnerList();
-    setPlanList();
-  }
-
-  function setOwnerList(){
-    patientService.getOwners().then(function(data){
-     var responseText = data.substring(8);
-     var resp = JSON.parse(responseText.replace(/(^google\.visualization\.Query\.setResponse\(|\);$)/g,''));
-
-     vm.ownerList = [];
-     angular.forEach(resp.table.rows, function(item) {
-       vm.ownerList.push(item.c[0].v);
-     });
-   });
+    //Wait until the token is authenticated.
+    $timeout(function(){
+      setPlanList();
+    },3000);
 
   }
 
   function setPlanList(){
     patientService.getPlan().then(function(data){
-      var responseText = data.substring(8);
-      var resp = JSON.parse(responseText.replace(/(^google\.visualization\.Query\.setResponse\(|\);$)/g,''));
-      vm.planList = [];
-      angular.forEach(resp.table.rows, function(item) {
-        vm.planList.push(item.c[0].v);
-      });
+      vm.planList = returnList(data);
     });
   }
 
+  vm.autocompleteOwner = function(owner){
+      return patientService.getOwners(owner).then(function(data){
+        return returnList(data);
+      })
+  };
+
   vm.autcompletePatient = function(patient){
     return patientService.getPatient(patient).then(function(data){
-      var responseText = data.substring(8);
-      var resp = JSON.parse(responseText.replace(/(^google\.visualization\.Query\.setResponse\(|\);$)/g,''));
-      return resp.table.rows.map(function(item){
-        return item.c[0].v;
-      });
+      return returnList(data);
     });
   };
 

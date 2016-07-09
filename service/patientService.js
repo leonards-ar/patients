@@ -1,24 +1,19 @@
 angular.module('patients').factory('patientService',function($q, $http, $rootScope) {
 
     var access_token = $rootScope.auth_token;
+    var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0&tq=";
     var patientService = {
 
-      getOwners: function(){
+      getOwners: function(ownerName){
         var deferred = $q.defer();
 
-        //var url = "https://spreadsheets.google.com/tq?tq=select%20C%20where%20C%20is%20not%20null&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0";
-        var query = "select C, count(A) where C IS NOT NULL group by C";
+        var query = "select C, count(A) where lower(C) like '%"+ownerName.toLowerCase()+"%' group by C";
 
         var encodedQuery = encodeURI(query);
 
-        var url = "http://spreadsheet-proxy.cloudhub.io/tq?&tq="+encodedQuery+"&tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0";
-
             $http({
-                    url: url,
+                    url: url + encodedQuery,
                     method: "GET",
-                    // headers:{
-                    //   Authorization: "Bearer " + access_token
-                    // }
                 })
                 .success(function(data, status, headers, config) {
                     deferred.resolve(data);
@@ -37,14 +32,9 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
 
         var encodedQuery = encodeURI(query);
 
-        var url = "http://spreadsheet-proxy.cloudhub.io/tq?&tq="+encodedQuery+"&tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0";
-
             $http({
-                    url: url,
+                    url: url + encodedQuery,
                     method: "GET",
-                    // headers:{
-                    //   Authorization: "Bearer " + access_token
-                    // }
                 })
                 .success(function(data, status, headers, config) {
                     deferred.resolve(data);
@@ -61,19 +51,13 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
 
       getPatient: function(patientName){
         var deferred = $q.defer();
-        var query = "select A, count(C) where A like '%"+patientName+"%' group by A";
+        var query = "select A, count(C) where lower(A) like '%"+patientName.toLowerCase()+"%' group by A";
 
         var encodedQuery = encodeURI(query);
-        console.log("!!!!!!!!!!!!!!!!!!!!!" + encodedQuery);
-
-        var url = "http://spreadsheet-proxy.cloudhub.io/tq?&tq="+encodedQuery+"&tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0";
 
         $http({
-                url: url,
+                url: url + encodedQuery,
                 method: "GET",
-                // headers:{
-                //   Authorization: "Bearer " + access_token
-                // }
             })
             .success(function(data, status, headers, config) {
                 deferred.resolve(data);
@@ -88,19 +72,13 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
       },
       getPathology: function(pathology){
         var deferred = $q.defer();
-        var query = "select D, count(C) where D like '%"+pathology+"%' group by D";
+        var query = "select D, count(C) where lower(D) like '%"+pathology.toLowerCase()+"%' group by D";
 
         var encodedQuery = encodeURI(query);
-        console.log("!!!!!!!!!!!!!!!!!!!!!" + encodedQuery);
-
-        var url = "http://spreadsheet-proxy.cloudhub.io/tq?&tq="+encodedQuery+"&tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0";
 
         $http({
-                url: url,
+                url: url + encodedQuery,
                 method: "GET",
-                // headers:{
-                //   Authorization: "Bearer " + access_token
-                // }
             })
             .success(function(data, status, headers, config) {
                 deferred.resolve(data);
@@ -115,18 +93,13 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
       },
       getHospital: function(hospital){
         var deferred = $q.defer();
-        var query = "select E, count(C) where E like '%"+hospital+"%' group by E";
+        var query = "select E, count(C) where lower(E) like '%"+hospital.toLowerCase()+"%' group by E";
 
         var encodedQuery = encodeURI(query);
 
-        var url = "http://spreadsheet-proxy.cloudhub.io/tq?&tq="+encodedQuery+"&tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0";
-
         $http({
-                url: url,
+                url: url + encodedQuery,
                 method: "GET",
-                // headers:{
-                //   Authorization: "Bearer " + access_token
-                // }
             })
             .success(function(data, status, headers, config) {
                 deferred.resolve(data);

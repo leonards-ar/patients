@@ -64,7 +64,7 @@ angular.module('patients').config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('newPatient', {
         url: '/newPatient',
-        templateUrl: 'app/patient/newPatient.html'
+        templateUrl: 'app/patient/newPatient.html',
     });
     /* Add New States Above */
     $urlRouterProvider.otherwise('/newPatient');

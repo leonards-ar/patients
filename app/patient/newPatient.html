@@ -30,9 +30,7 @@
             <div class="form-group">
                 <label for="invoiceOwner" class="col-sm-3 col-xs-3 control-label">Factura a Cargo</label>
                 <div class="col-sm-6 col-xs-8">
-                  <select id="invoiceOwner" name="invoiceOwner" ng-model="patient.invoiceOwner" class="form-control">
-                    <option ng-repeat="option in ownerList" value="{{option}}">{{option}}</option>
-                  </select>
+                  <input class="form-control" ng-model="patient.invoiceOwner" type="text" uib-typeahead="owner for owner in autocompleteOwner($viewValue) | limitTo:8" typeahead-loading="loadingOwnerLocations">
                 </div>
             </div>
 
