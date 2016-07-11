@@ -112,26 +112,25 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
             });
         return deferred.promise;
       },
-      saveSpreadSheet: function (patient){
+      saveSpreadSheet: function (patient,spreadSheet){
 
         var deferred = $q.defer();
-        url = "https://sheets.googleapis.com/v4/spreadsheets/1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY:batchUpdate";
+        url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadSheet.sheetId + ":batchUpdate";
+
+        var sheets = spreadSheet.sheets;
+        var principalSheet = sheets.filter(function(sheet){
+          return sheet.properties.index === 0;
+        });
 
         var request = {
           "requests":[{
               "appendCells":
                 {
-                "sheetId": 1546513263,
+                "sheetId": principalSheet.properties.sheetId,
                 "rows":[{
                   "values":[{
                       "userEnteredValue":{
                         "stringValue": patient.name
-                      },
-                      "effectiveFormat":{
-                        "textFormat":{
-                          "fontFamily": "Arial",
-                          "fontSize": 12
-                        }
                       }
                     },
                     {

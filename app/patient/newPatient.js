@@ -49,7 +49,7 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
 
   vm.save = function(){
     flashService.showLoading();
-    patientService.saveSpreadSheet(vm.patient).then(function(data){
+    patientService.saveSpreadSheet(vm.patient,vm.files[0]).then(function(data){
       flashService.hideLoading();
       flashService.showSuccess("Se ha guardado el Paciente");
       vm.patient = {};
@@ -79,7 +79,6 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
           var sheetMetadata = buildSheetMetadata(data);
           sheetMetadata.filename = filename;
           vm.files.push(sheetMetadata);
-          vm.filename = "Puto";
           flashService.hideLoading();
         }, function(data){
             flashService.hideLoading();
@@ -114,6 +113,7 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
 
     var sheetData = {
         title: data.properties.title,
+        sheetId: data.spreadsheetId,
         textFormat: data.properties.defaultFormat.textFormat,
         sheets: data.sheets
     };

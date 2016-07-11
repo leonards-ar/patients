@@ -8,12 +8,10 @@
         <div class="panel-default">
           <div class="panel-body">
             <uib-accordion>
-              <uib-accordion-group is-open="isAccordionOpen" ng-init="isAccordionOpen = true">
+              <uib-accordion-group is-open="isAccordionOpen" ng-init="isAccordionOpen = false">
                 <uib-accordion-heading>
                   Seleccionar Planilla <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isAccordionOpen, 'glyphicon-chevron-right': !isAccordionOpen}"></i>
                 </uib-accordion-heading>
-                  <!-- <a href="javascript:;" lk-google-picker on-picked="onPicked(docs)" on-loaded="onLoaded()" on-cancel="onCancel()">Open my Google Drive</a> -->
-                  <!-- <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=loadPicker"></script> -->
                   <div ng-include="'app/patient/spreadsheets.html'"></div>
               </uib-accordion-group>
             </uib-accordion>
@@ -23,8 +21,7 @@
             <div class="form-group">
                 <label for="patient" class="col-sm-3 col-xs-3 control-label">Paciente</label>
                 <div class="col-sm-6 col-xs-8 ">
-                  <input class="form-control" ng-model="patient.name" type="text" uib-typeahead="patient for patient in autcompletePatient($viewValue) | limitTo:8" typeahead-loading="loadingLocations" typeahead-no-results="noResults">
-                  <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                  <input class="form-control" ng-model="patient.name" type="text" uib-typeahead="patient for patient in autcompletePatient($viewValue) | limitTo:8">
                 </div>
             </div>
 
@@ -43,22 +40,21 @@
             <div class="form-group">
                 <label for="invoiceOwner" class="col-sm-3 col-xs-3 control-label">Factura a Cargo</label>
                 <div class="col-sm-6 col-xs-8">
-                  <input class="form-control" ng-model="patient.invoiceOwner" type="text" uib-typeahead="owner for owner in autocompleteOwner($viewValue) | limitTo:8" typeahead-loading="loadingOwnerLocations">
+                  <input class="form-control" ng-model="patient.invoiceOwner" type="text" uib-typeahead="owner for owner in autocompleteOwner($viewValue) | limitTo:8">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="patology" class="col-sm-3 col-xs-3 control-label">Patolog&iacute;a</label>
                 <div class="col-sm-6 col-xs-8">
-                    <input ng-model="patient.pathology" uib-typeahead="pathology for pathology in autocompletePathology($viewValue) | limitTo:8" typeahead-loading="loadingPathLocations" class="form-control"></select>
-                    <i ng-show="loadingPathLocations" class="glyphicon glyphicon-refresh"></i>
+                    <input ng-model="patient.pathology" uib-typeahead="pathology for pathology in autocompletePathology($viewValue) | limitTo:8" class="form-control">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="hospital" class="col-sm-3 col-xs-3 control-label">Sanatorio</label>
                 <div class="col-sm-6 col-xs-8">
-                    <input id="hospital" ng-model="patient.hospital" uib-typeahead="hospital for hospital in autocompleteHospital($viewValue) | limitTo:8" typeahead-loading="loadingHospLocations" class="form-control">
+                    <input id="hospital" ng-model="patient.hospital" uib-typeahead="hospital for hospital in autocompleteHospital($viewValue) | limitTo:8" class="form-control">
                 </div>
             </div>
 
@@ -89,10 +85,6 @@
                   <input id="treatment" class="form-control" type="textarea" ng-model="patient.treaetment" rows="4" cols="50" name="treatment">
                 </div>
             </div>
-
-            <input id="eid" type="hidden" value="" name="eid" class="ignore">
-            <input id="Id" type="hidden" value="" name="Id" class="ignore">
-            <input id="OppId" class="form-control" type="hidden" name="OppId">
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-xs-offset-3 col-sm-6 col-xs-8">
