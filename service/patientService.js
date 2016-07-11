@@ -117,16 +117,11 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
         var deferred = $q.defer();
         url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadSheet.sheetId + ":batchUpdate";
 
-        var sheets = spreadSheet.sheets;
-        var principalSheet = sheets.filter(function(sheet){
-          return sheet.properties.index === 0;
-        });
-
         var request = {
           "requests":[{
               "appendCells":
                 {
-                "sheetId": principalSheet.properties.sheetId,
+                "sheetId": spreadSheet.princpalSheetId,
                 "rows":[{
                   "values":[{
                       "userEnteredValue":{

@@ -12,6 +12,12 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
     //Wait until the token is authenticated.
     $timeout(function(){
       setPlanList();
+      chrome.storage.sync.get('files', function(result){
+        console.log("!!!!!! found them");
+        if(result.files){
+          vm.files = result.files;
+        }
+      })
     },3000);
 
   }
@@ -49,6 +55,11 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
 
   vm.save = function(){
     flashService.showLoading();
+    // Save it using the Chrome extension storage API.
+        chrome.storage.sync.set({'files': vm.files}, function() {
+          // Notify that we saved.
+          console.log('Settings saved');
+        });
     patientService.saveSpreadSheet(vm.patient,vm.files[0]).then(function(data){
       flashService.hideLoading();
       flashService.showSuccess("Se ha guardado el Paciente");
@@ -115,12 +126,26 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
         title: data.properties.title,
         sheetId: data.spreadsheetId,
         textFormat: data.properties.defaultFormat.textFormat,
-        sheets: data.sheets
     };
+    var sheet = getSheetId(data.sheets,0);
+
+    if(sheet){
+      sheetData.princpalSheetId = sheet[0].properties.sheetId;
+    } else {
+        var error = {
+          "message": "Bad File Format. Missing principal sheet",
+          "code": 500
+        };
+    }
 
     return sheetData;
 
+  }
 
+  function getSheetId(sheets, index){
+    return sheets.filter(function(sheet){
+      return sheet.properties.index === index;
+    });
   }
 
   init();
