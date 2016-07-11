@@ -22,7 +22,7 @@ angular.module('patients').factory('loginService',function($q,$rootScope,$http) 
 
                   console.log("!!!!!!!creo que salio todo bien: " + token);
                   $rootScope.email = data.email;
-                  //$rootScope.avatar = data.picture;
+                  $rootScope.avatar = data.picture;
                   $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
                   deferred.resolve(data);

@@ -4,7 +4,12 @@
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
-  <link href="app.less" type="text/css" rel="stylesheet/less">
+  <link rel="stylesheet/less" href="app.less" type="text/css" >
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.css">
+  <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.buttons.css">
+  <link rel="stylesheet" href="bower_components/angular-block-ui/dist/angular-block-ui.min.css"/>
+<!-- After AngularJS -->
 </head>
 <body>
 
@@ -22,6 +27,11 @@
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
+  <script src="bower_components/pnotify/dist/pnotify.js"></script>
+  <script src="bower_components/pnotify/dist/pnotify.confirm.js"></script>
+  <script src="bower_components/pnotify/dist/pnotify.buttons.js"></script>
+  <script src="bower_components/angular-pnotify/src/angular-pnotify.js"></script>
   <!-- Add New Bower Component JS Above -->
 
 
@@ -30,6 +40,9 @@
   <script src="app/patient/newPatient.js"></script>
   <script src="service/patientService.js"></script>
   <script src="service/loginService.js"></script>
+  <script src="service/flashService.js"></script>
+  <!-- <script src="js/gdrive.js"></script> -->
+  <script src="service/spreadsheetService.js"></script>
   <!-- Add New Component JS Above -->
 
   <div>

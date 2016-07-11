@@ -1,4 +1,4 @@
-angular.module('patients').controller('NewpatientCtrl',function($scope, patientService,$rootScope,$timeout){
+angular.module('patients').controller('NewpatientCtrl',function($scope, patientService,$rootScope,$timeout,flashService,spreadsheetService){
 
   var vm=$scope;
 
@@ -6,6 +6,8 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
 
   };
 
+  vm.files = [];
+  vm.filename = "";
   function init(){
     //Wait until the token is authenticated.
     $timeout(function(){
@@ -46,11 +48,58 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
   };
 
   vm.save = function(){
+    flashService.showLoading();
     patientService.saveSpreadSheet(vm.patient).then(function(data){
-      console.log("!!!!!Se guardo");
-    }, function(){
-        console.log("!!!!!Error");
+      flashService.hideLoading();
+      flashService.showSuccess("Se ha guardado el Paciente");
+      vm.patient = {};
+    }, function(data){
+        flashService.hideLoading();
+        flashService.handleError(data);
     });
+
+
+  };
+
+  vm.reset = function(){
+    vm.patient = {};
+  };
+
+  vm.addFile = function(filename){
+    if(filename !== "" ){
+        flashService.showLoading();
+        var regex = /^https:\/\/.*\/.*\/(.*)\/.*$/g;
+        var sheetId = regex.exec(filename)[1];
+        if(!sheetId){
+          flashService.showError("Bad Filename");
+          flashService.hideLoading();
+          return;
+        }
+        spreadsheetService.getSheetInformation(sheetId).then(function(data){
+          var sheetMetadata = buildSheetMetadata(data);
+          sheetMetadata.filename = filename;
+          vm.files.push(sheetMetadata);
+          vm.filename = "Puto";
+          flashService.hideLoading();
+        }, function(data){
+            flashService.hideLoading();
+            if(data.status === 404){
+              var error = {
+                message: "No se encontro el archivo",
+                code: data.status
+              };
+              flashService.showError(error);
+            } else {
+              flashService.handleError(data);
+            }
+
+        });
+    }
+  };
+
+  vm.removeFile = function(index){
+    vm.files.splice(index, 1);
+
   };
 
   function returnList(dataQueryTable){
@@ -59,6 +108,19 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
       return resp.table.rows.map(function(item){
         return item.c[0].v;
       });
+  }
+
+  function buildSheetMetadata(data){
+
+    var sheetData = {
+        title: data.properties.title,
+        textFormat: data.properties.defaultFormat.textFormat,
+        sheets: data.sheets
+    };
+
+    return sheetData;
+
+
   }
 
   init();

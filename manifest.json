@@ -16,7 +16,7 @@
   },
   "oauth2": {
     //"client_id": "217086337535-5n29jarj09ofbr06piv3icc4n6ce15ap.apps.googleusercontent.com",
-    "client_id": "217086337535-n34kv375gatp8uvdtt2v8ldggn76qv9v.apps.googleusercontent.com", 
+    "client_id": "217086337535-n34kv375gatp8uvdtt2v8ldggn76qv9v.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/drive",
       "https://www.googleapis.com/auth/drive.readonly",
@@ -31,6 +31,7 @@
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
     "https://www.googleapis.com/auth/spreadsheets",
-    "https://spreadsheets.google.com/*"
+    "https://spreadsheets.google.com/*",
+    "http://apis.google.com"
   ]
 }

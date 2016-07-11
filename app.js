@@ -1,4 +1,4 @@
-angular.module('patients', ['ui.bootstrap','ui.router','ngAnimate']);
+angular.module('patients', ['ui.bootstrap','ui.router','ngAnimate','blockUI','jlareau.pnotify']);
 
 var promiseTranslation = null;
 
@@ -72,8 +72,6 @@ angular.module('patients').config(function($stateProvider, $urlRouterProvider) {
 });
 
 angular.module('patients').run(function($rootScope, loginService, $timeout) {
-    var access_token = "ya29.CjkYAzFwBPjTQSLQpxuMgfx26TDtIeSfihNF6TCTv0nuHLLs-5a1kmc6zirPHMHWxEq-Ebj7L-jiCdI";
-    console.log("!!!!!!!!!! Estoy en el run");
     $rootScope.safeApply = function(fn) {
         var phase = $rootScope.$$phase;
         if (phase === '$apply' || phase === '$digest') {
@@ -115,5 +113,14 @@ angular.module('patients').run(function($rootScope, loginService, $timeout) {
     checkLogin();
     $timeout(3000);
 
+
+});
+
+angular.module('patients').config(function(blockUIConfig) {
+
+  // Change the default overlay message
+  blockUIConfig.message = 'Procesando...';
+
+  blockUIConfig.autoBlock = false;
 
 });

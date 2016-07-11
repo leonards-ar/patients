@@ -197,6 +197,21 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
             });
         });
         return deferred.promise;
+      },
+
+      getImage: function(url){
+        var deferred = $q.defer();
+
+        $http.get(url)
+          .success(function(data, status, headers, config){
+            deferred.resolve(data);
+          })
+          .error(function(data, status, headers, config) {
+            deferred.reject({
+                data: data,
+                status: status
+          });
+        });
       }
     };
 
