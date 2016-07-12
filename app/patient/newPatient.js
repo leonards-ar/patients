@@ -17,6 +17,7 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
         if(result.files){
           vm.files = result.files;
         }
+        vm.isEmpty();
       });
     },3000);
 
@@ -60,13 +61,13 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
           // Notify that we saved.
           console.log('Settings saved');
         });
-    patientService.saveSpreadSheet(vm.patient,vm.files[0]).then(function(data){
+    patientService.saveSpreadSheet(vm.patient,vm.files).then(function(responses){
       flashService.hideLoading();
-      flashService.showSuccess("Se ha guardado el Paciente");
+      responses.forEach( function(data){
+        flashService.showSuccess("Se ha guardado el Paciente en la planilla " + data.title);
+      });
+
       vm.patient = {};
-    }, function(data){
-        flashService.hideLoading();
-        flashService.handleError(data);
     });
 
 

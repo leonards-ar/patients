@@ -115,85 +115,75 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
             });
         return deferred.promise;
       },
-      saveSpreadSheet: function (patient,spreadSheet){
-
-        var deferred = $q.defer();
-        var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadSheet.sheetId + ":batchUpdate";
-
-        var request = {
-          "requests":[{
-              "appendCells":
-                {
-                "sheetId": spreadSheet.princpalSheetId,
-                "rows":[{
-                  "values":[{
-                      "userEnteredValue":{
-                        "stringValue": patient.name
-                      }
-                    },
+      saveSpreadSheet: function (patient,spreadsheets){
+        return $q.all(spreadsheets.map(function(spreadSheet){
+            var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadSheet.sheetId + ":batchUpdate";
+            var request = {
+              "requests":[{
+                  "appendCells":
                     {
-                      "userEnteredValue":{
-                        "stringValue": patient.date
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.invoiceOwner
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.pathology
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.hospital
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.room
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.plan
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": ""
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.credential_number
-                      }
-                    },
-                    {
-                      "userEnteredValue":{
-                        "stringValue": patient.treaetment
-                      }
-                    }
-                  ]
-                }],
-                "fields":"*"
-              }
-            }]
-        };
-
-        $http.post(url,request)
-        .success(function(data, status, headers, config) {
-            deferred.resolve(data);
-        })
-        .error(function(data, status, headers, config) {
-            deferred.reject({
-                data: data,
-                status: status
+                    "sheetId": spreadSheet.princpalSheetId,
+                    "rows":[{
+                      "values":[{
+                          "userEnteredValue":{
+                            "stringValue": patient.name
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.date
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.invoiceOwner
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.pathology
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.hospital
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.room
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.plan
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": ""
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.credential_number
+                          }
+                        },
+                        {
+                          "userEnteredValue":{
+                            "stringValue": patient.treaetment
+                          }
+                        }
+                      ]
+                    }],
+                    "fields":"*"
+                  }
+                }]
+            };
+            return $http.post(url,request).success(function(data){
+              data.title = spreadSheet.title;
             });
-        });
-        return deferred.promise;
+          }));
       },
 
       getImage: function(url){
