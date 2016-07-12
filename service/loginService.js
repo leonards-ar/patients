@@ -5,7 +5,6 @@ angular.module('patients').factory('loginService',function($q,$rootScope,$http) 
     var loginService = {
 
       refreshToken: function() {
-        console.log("!!!!!!! Estoy en refreshToken");
         var deferred = $q.defer();
         chrome.identity.getAuthToken({interactive: true}, function (token) {
 
@@ -19,8 +18,6 @@ angular.module('patients').factory('loginService',function($q,$rootScope,$http) 
 
             $http.get(url)
             .success(function(data, status, headers, config) {
-
-                  console.log("!!!!!!!creo que salio todo bien: " + token);
                   $rootScope.email = data.email;
                   $rootScope.avatar = data.picture;
                   $http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
@@ -29,7 +26,6 @@ angular.module('patients').factory('loginService',function($q,$rootScope,$http) 
 
               })
               .error(function(data, status, headers, config) {
-                  console.log("!!!!!!!y yo soy la concha de tu madre");
                   deferred.reject({
                       data: data,
                       status: status

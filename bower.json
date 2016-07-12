@@ -21,6 +21,5 @@
     "moment": "~2.12",
     "less.js": "~2.6",
     "font-awesome": "~4.5",
-    "angular-google-picker": "^0.2.2"
   }
 }

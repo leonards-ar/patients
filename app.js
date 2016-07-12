@@ -98,7 +98,6 @@ angular.module('patients').run(function($rootScope, loginService, $timeout) {
         console.log("!!!!!! Calling refreshToken()");
 
         loginService.refreshToken().then(function(){
-          console.log("!!!!!!!! LoggedIn");
           sessionLoaded();
 
         }, function(){

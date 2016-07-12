@@ -8,16 +8,16 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
 
   vm.files = [];
   vm.filename = "";
+
   function init(){
     //Wait until the token is authenticated.
     $timeout(function(){
-      setPlanList();
+      // setPlanList();
       chrome.storage.sync.get('files', function(result){
-        console.log("!!!!!! found them");
         if(result.files){
           vm.files = result.files;
         }
-      })
+      });
     },3000);
 
   }
@@ -29,25 +29,25 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
   }
 
   vm.autocompleteOwner = function(owner){
-      return patientService.getOwners(owner).then(function(data){
+      return patientService.getOwners(owner,vm.files[0].sheetId).then(function(data){
         return returnList(data);
       });
   };
 
   vm.autcompletePatient = function(patient){
-    return patientService.getPatient(patient).then(function(data){
+    return patientService.getPatient(patient, vm.files[0].sheetId).then(function(data){
       return returnList(data);
     });
   };
 
   vm.autocompletePathology = function(pathology){
-    return patientService.getPathology(pathology).then(function(data){
+    return patientService.getPathology(pathology, vm.files[0].sheetId).then(function(data){
       return returnList(data);
     });
   };
 
   vm.autocompleteHospital = function(hospital){
-    return patientService.getHospital(hospital).then(function(data){
+    return patientService.getHospital(hospital, vm.files[0].sheetId).then(function(data){
         return returnList(data);
     });
 
@@ -112,6 +112,10 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
 
   };
 
+  vm.isEmpty = function(){
+    return vm.files.length > 0;
+  };
+
   function returnList(dataQueryTable){
       var responseText = dataQueryTable.substring(8);
       var resp = JSON.parse(responseText.replace(/(^google\.visualization\.Query\.setResponse\(|\);$)/g,''));
@@ -125,12 +129,12 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
     var sheetData = {
         title: data.properties.title,
         sheetId: data.spreadsheetId,
-        textFormat: data.properties.defaultFormat.textFormat,
+        defaultFormat: data.properties.defaultFormat
     };
-    var sheet = getSheetId(data.sheets,0);
+    var principalSheet = getSheetId(data.sheets,0);
 
-    if(sheet){
-      sheetData.princpalSheetId = sheet[0].properties.sheetId;
+    if(principalSheet){
+      sheetData.princpalSheetId = principalSheet[0].properties.sheetId;
     } else {
         var error = {
           "message": "Bad File Format. Missing principal sheet",

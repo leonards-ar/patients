@@ -15,7 +15,9 @@
     "128": "img/patient-logo-128x128.png"
   },
   "oauth2": {
+    // production
     //"client_id": "217086337535-5n29jarj09ofbr06piv3icc4n6ce15ap.apps.googleusercontent.com",
+    // development
     "client_id": "217086337535-n34kv375gatp8uvdtt2v8ldggn76qv9v.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/drive",

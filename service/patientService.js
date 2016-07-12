@@ -1,12 +1,11 @@
 angular.module('patients').factory('patientService',function($q, $http, $rootScope) {
 
     var access_token = $rootScope.auth_token;
-    var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key=1vEKEXN718Nsow0-W_hrQFQvZk6XnPa0RS7l3DhvxCHY&gid=0&tq=";
     var patientService = {
 
-      getOwners: function(ownerName){
+      getOwners: function(ownerName,spreadSheetId){
         var deferred = $q.defer();
-
+        var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key="+spreadSheetId+"&gid=0&tq=";
         var query = "select C, count(A) where lower(C) like '%"+ownerName.toLowerCase()+"%' group by C";
 
         var encodedQuery = encodeURI(query);
@@ -28,6 +27,7 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
       },
       getPlan: function(){
         var deferred = $q.defer();
+        var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key=some_value&gid=0&tq=";
         var query = "select G, count(A) where G IS NOT NULL group by G";
 
         var encodedQuery = encodeURI(query);
@@ -49,8 +49,9 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
 
       },
 
-      getPatient: function(patientName){
+      getPatient: function(patientName, spreadSheetId){
         var deferred = $q.defer();
+        var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key="+spreadSheetId+"&gid=0&tq=";
         var query = "select A, count(C) where lower(A) like '%"+patientName.toLowerCase()+"%' group by A";
 
         var encodedQuery = encodeURI(query);
@@ -70,8 +71,9 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
             });
         return deferred.promise;
       },
-      getPathology: function(pathology){
+      getPathology: function(pathology, spreadSheetId){
         var deferred = $q.defer();
+        var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key="+spreadSheetId+"&gid=0&tq=";
         var query = "select D, count(C) where lower(D) like '%"+pathology.toLowerCase()+"%' group by D";
 
         var encodedQuery = encodeURI(query);
@@ -91,8 +93,9 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
             });
         return deferred.promise;
       },
-      getHospital: function(hospital){
+      getHospital: function(hospital, spreadSheetId){
         var deferred = $q.defer();
+        var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key="+spreadSheetId+"&gid=0&tq=";
         var query = "select E, count(C) where lower(E) like '%"+hospital.toLowerCase()+"%' group by E";
 
         var encodedQuery = encodeURI(query);
@@ -115,7 +118,7 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
       saveSpreadSheet: function (patient,spreadSheet){
 
         var deferred = $q.defer();
-        url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadSheet.sheetId + ":batchUpdate";
+        var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadSheet.sheetId + ":batchUpdate";
 
         var request = {
           "requests":[{

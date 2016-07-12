@@ -17,7 +17,7 @@
             </uib-accordion>
           </div>
         </div>
-        <form id="newPatient" class="form-horizontal" style="margin-top: 25px;">
+        <form id="newPatient" class="form-horizontal" style="margin-top: 25px;" ng-show="isEmpty()">
             <div class="form-group">
                 <label for="patient" class="col-sm-3 col-xs-3 control-label">Paciente</label>
                 <div class="col-sm-6 col-xs-8 ">
@@ -68,7 +68,11 @@
                 <label for="plan" class="col-sm-3 col-xs-3 control-label">Plan</label>
                 <div class="col-sm-6 col-xs-8">
                   <select id="plan" name="plan" ng-model="patient.plan" class="form-control">
-                    <option ng-repeat="option in planList" value="{{option}}">{{option}}</option>
+                    <option value=""></option>
+                    <option value="025">025</option>
+                    <option value="210">210</option>
+                    <option value="310">310</option>
+                    <option value="410">410</option>
                   </select>
                 </div>
             </div>
@@ -88,7 +92,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-xs-offset-3 col-sm-6 col-xs-8">
-                    <input type="submit" value="Create" id="createSCAction" ng-click="save()" class="btn btn-success" data-loading-text="Loading...">
+                    <input type="submit" value="Create" id="createSCAction" ng-click="save()" ng-disabled="!isEmpty()" class="btn btn-success" data-loading-text="Loading...">
                     <input type="submit" value="Reset" id="closePopup" ng-click="reset()" class="btn btn-danger pull-right">
                 </div>
             </div>
