@@ -34,7 +34,6 @@
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
     "https://www.googleapis.com/auth/spreadsheets",
-    "https://spreadsheets.google.com/*",
-    "http://apis.google.com"
+    "https://spreadsheets.google.com/*"
   ]
 }

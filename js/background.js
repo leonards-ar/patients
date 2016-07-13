@@ -4,23 +4,23 @@ var eid = "eid not found";
 var access_token = "to be replaced";
 
 // authenticate the currently logged in user so we can use the Google APIs
-// chrome.identity.getAuthToken({
-//     interactive: true
-// }, function(token) {
-//     if (chrome.runtime.lastError) {
-//         alert(chrome.runtime.lastError.message);
-//         return;
-//     }
-//     var x = new XMLHttpRequest();
-//     x.open('GET', 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token);
-//     x.onload = function() {
-//         var resp = JSON.parse(x.response);
-//         email = resp['email'];
-//     };
-//     x.send();
-//     access_token = token;
-    
-    
+//  chrome.identity.getAuthToken({
+//      interactive: true
+//  }, function(token) {
+//      if (chrome.runtime.lastError) {
+//          alert(chrome.runtime.lastError.message);
+//          return;
+//      }
+//      var x = new XMLHttpRequest();
+//      x.open('GET', 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token);
+//      x.onload = function() {
+//          var resp = JSON.parse(x.response);
+//          email = resp['email'];
+//      };
+//      x.send();
+//      access_token = token;
+//
+//
 // });
 
 // add a listener so that we can react to events triggered in other javascript files
@@ -29,9 +29,9 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
     'id': 'PatientABM',
     'innerBounds': {
       'width': 770,
-      'height': 750,
+      'height': 900,
       'minWidth': 770,
-      'minHeight': 750,
+      'minHeight': 900,
     }
   });
 });
