@@ -93,6 +93,29 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
             });
         return deferred.promise;
       },
+      getCustomerNumber: function(patientName, spreadSheetId){
+        var deferred = $q.defer();
+        var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key="+spreadSheetId+"&gid=0&tq=";
+        var query = "select I, count(C) where lower(A) = '" + patientName.toLowerCase() + "' group by I";
+
+        var encodedQuery = encodeURI(query);
+
+        $http({
+                url: url + encodedQuery,
+                method: "GET",
+            })
+            .success(function(data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function(data, status, headers, config) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            });
+        return deferred.promise;
+
+      },
       getHospital: function(hospital, spreadSheetId){
         var deferred = $q.defer();
         var url = "http://spreadsheet-proxy.cloudhub.io/tq?tqx=out:json&key="+spreadSheetId+"&gid=0&tq=";
@@ -166,7 +189,7 @@ angular.module('patients').factory('patientService',function($q, $http, $rootSco
                         },
                         {
                           "userEnteredValue":{
-                            "stringValue": patient.credential_number
+                            "numberValue": patient.credential_number
                           }
                         },
                         {

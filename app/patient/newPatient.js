@@ -1,4 +1,4 @@
-angular.module('patients').controller('NewpatientCtrl',function($scope, patientService,$rootScope,$timeout,flashService,spreadsheetService){
+angular.module('patients').controller('NewpatientCtrl',function($scope, patientService,$rootScope,$timeout,flashService,spreadsheetService,chromeStorage){
 
   var vm=$scope;
 
@@ -13,7 +13,7 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
     //Wait until the token is authenticated.
     $timeout(function(){
       // setPlanList();
-      chrome.storage.sync.get('files', function(result){
+      chromeStorage.get('files', function(result){
         if(result.files){
           vm.files = result.files;
         }
@@ -57,7 +57,7 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
   vm.save = function(){
     flashService.showLoading();
     // Save it using the Chrome extension storage API.
-        chrome.storage.sync.set({'files': vm.files}, function() {
+        chromeStorage.set({'files': vm.files}, function() {
           // Notify that we saved.
           console.log('Settings saved');
         });
@@ -68,13 +68,24 @@ angular.module('patients').controller('NewpatientCtrl',function($scope, patientS
       });
 
       vm.patient = {};
-    });
-
-
+    }, function(responses){
+      flashService.hideLoading();
+        flashService.handleError(responses);
+      });
   };
 
   vm.reset = function(){
     vm.patient = {};
+  };
+
+  vm.getClientId = function(patientName){
+    patientService.getCustomerNumber(patientName, vm.files[0].sheetId).then(function(data){
+      var number = returnList(data);
+      if(number.length > 0){
+        vm.patient.credential_number = number[0];
+      }
+
+    });
   };
 
   vm.addFile = function(filename){

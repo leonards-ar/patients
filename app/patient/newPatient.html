@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label for="patient" class="col-sm-3 col-xs-3 control-label">Paciente</label>
                 <div class="col-sm-6 col-xs-8 ">
-                  <input class="form-control" ng-model="patient.name" type="text" uib-typeahead="patient for patient in autcompletePatient($viewValue) | limitTo:8">
+                  <input class="form-control" ng-model="patient.name" type="text" uib-typeahead="patient for patient in autcompletePatient($viewValue) | limitTo:8", ng-blur="getClientId(patient.name)">
                 </div>
             </div>
 

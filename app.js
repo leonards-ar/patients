@@ -1,4 +1,4 @@
-angular.module('patients', ['ui.bootstrap','ui.router','ngAnimate','blockUI','jlareau.pnotify']);
+angular.module('patients', ['ui.bootstrap','ui.router','ngAnimate','blockUI','jlareau.pnotify','chromeStorage']);
 
 var promiseTranslation = null;
 
